@@ -25,10 +25,24 @@
     span.className = "item-text";
     span.textContent = text;
 
+    const btn = document.createElement("button");
+    btn.className = "delete-btn";
+    btn.textContent = "Delete";
+
     li.appendChild(span);
+    li.appendChild(btn);
     list.appendChild(li);
 
     input.value = "";
+  });
+
+  list.addEventListener("click", function (e) {
+    if (e.target.classList.contains("item-text")) {
+      e.target.closest("li").classList.toggle("completed");
+    }
+    if (e.target.classList.contains("delete-btn")) {
+      e.target.closest("li").remove();
+    }
   });
 })();
 
