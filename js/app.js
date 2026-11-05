@@ -12,6 +12,7 @@
   const filterAll = document.getElementById("filter-all");
   const filterActive = document.getElementById("filter-active");
   const filterDone = document.getElementById("filter-done");
+  const counter = document.getElementById("counter");
 
   let currentFilter = "all";
 
@@ -25,6 +26,11 @@
       li.hidden = !show;
       li.style.display = show ? "" : "none";
     });
+  }
+
+  function updateCounter() {
+    const left = list.querySelectorAll("li:not(.completed)").length;
+    counter.textContent = left + (left === 1 ? " item left" : " items left");
   }
 
   form.addEventListener("submit", function (e) {
@@ -52,6 +58,7 @@
 
     input.value = "";
     applyFilter();
+    updateCounter();
   });
 
   list.addEventListener("click", function (e) {
@@ -62,6 +69,7 @@
       e.target.closest("li").remove();
     }
     applyFilter();
+    updateCounter();
   });
 
   filterAll.addEventListener("click", function () {
@@ -78,4 +86,6 @@
     currentFilter = "done";
     applyFilter();
   });
+
+  updateCounter();
 })();
