@@ -17,8 +17,7 @@
   let currentFilter = "all";
 
   function applyFilter() {
-    const items = list.querySelectorAll("li");
-    items.forEach(function (li) {
+    Array.from(list.children).forEach(function (li) {
       const done = li.classList.contains("completed");
       let show = true;
       if (currentFilter === "active") show = !done;
@@ -29,7 +28,9 @@
   }
 
   function updateCounter() {
-    const left = list.querySelectorAll("li:not(.completed)").length;
+    const left = Array.from(list.children).filter(function (li) {
+      return !li.classList.contains("completed");
+    }).length;
     counter.textContent = left + (left === 1 ? " item left" : " items left");
   }
 
