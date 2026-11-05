@@ -9,6 +9,23 @@
   const input = document.getElementById("todo-input");
   const list = document.getElementById("todo-list");
   const errorMsg = document.getElementById("error-msg");
+  const filterAll = document.getElementById("filter-all");
+  const filterActive = document.getElementById("filter-active");
+  const filterDone = document.getElementById("filter-done");
+
+  let currentFilter = "all";
+
+  function applyFilter() {
+    const items = list.querySelectorAll("li");
+    items.forEach(function (li) {
+      const done = li.classList.contains("completed");
+      let show = true;
+      if (currentFilter === "active") show = !done;
+      if (currentFilter === "done") show = done;
+      li.hidden = !show;
+      li.style.display = show ? "" : "none";
+    });
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -34,6 +51,7 @@
     list.appendChild(li);
 
     input.value = "";
+    applyFilter();
   });
 
   list.addEventListener("click", function (e) {
@@ -43,7 +61,21 @@
     if (e.target.classList.contains("delete-btn")) {
       e.target.closest("li").remove();
     }
+    applyFilter();
+  });
+
+  filterAll.addEventListener("click", function () {
+    currentFilter = "all";
+    applyFilter();
+  });
+
+  filterActive.addEventListener("click", function () {
+    currentFilter = "active";
+    applyFilter();
+  });
+
+  filterDone.addEventListener("click", function () {
+    currentFilter = "done";
+    applyFilter();
   });
 })();
-
-
